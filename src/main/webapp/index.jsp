@@ -1,77 +1,100 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to Sample Web Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        /* Reset basic styles */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f0f8ff;
+            box-sizing: border-box;
         }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
+
+        .calculator-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            max-width: 400px;
+            width: 100%;
         }
+
         h1 {
-            margin: 0;
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
-        .content {
-            padding: 20px;
-            text-align: center;
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            text-align: left;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
+
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #2c3e50;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+            width: 100%;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
         }
-        #serverTime {
+
+        .note {
             margin-top: 20px;
-            font-size: 18px;
-            color: #333;
+            font-size: 0.9em;
+            color: #95a5a6;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Welcome to the Sample Web Application</h1>
-</header>
+<div class="calculator-container">
+    <h1>Simple Calculator</h1>
 
-<div class="container">
-    <div class="content">
-        <p>This is a simple web application to demonstrate WAR file packaging and deployment on an Apache server.</p>
-        <button onclick="clickMe()">Click Me</button>
-        <div id="clickMe"></div>
-    </div>
+    <form action="calculate" method="get">
+        <label for="num1">Number 1:</label>
+        <input type="number" id="num1" name="num1" required>
+
+        <label for="num2">Number 2:</label>
+        <input type="number" id="num2" name="num2" required>
+
+        <input type="submit" value="Calculate Sum">
+    </form>
+
+    <p class="note">Enter two numbers to calculate their sum.</p>
 </div>
-
-<script>
-    function clickMe() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'getServerTime.jsp', true);
-        xhr.onload = function() {
-         document.getElementById('clickMe').innerHTML = xhr.responseText;
-        };
-        xhr.send();
-    }
-</script>
 
 </body>
 </html>
