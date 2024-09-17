@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1>Hello, Welcome to the Sample Web Application!</h1>
+<h1>Hello, Welcome to the Sample Web Application Build From Jenkin!</h1>
 
 <p>This is a simple web application to demonstrate WAR file packaging and deployment on a server.</p>
 
