@@ -1,12 +1,16 @@
 package com.example;
 
 public class DemoApplication {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
+    // Method to add two numbers
+    public int add(int a, int b) {
+        return a - b;
     }
 
-    // A simple method to be tested
-    public int add(int a, int b) {
-        return a + b;
+    public int sub(int a, int b) {
+        return a - b;
+    }
+
+    public int mul(int a, int b) {
+        return a * b;
     }
 }
