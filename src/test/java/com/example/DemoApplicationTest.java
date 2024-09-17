@@ -9,6 +9,6 @@ public class DemoApplicationTest {
     public void testAdd() {
         DemoApplication app = new DemoApplication();
         int result = app.add(2, 2);
-        assertEquals(5, result);
+        assertEquals(4, result);
     }
 }
