@@ -8,7 +8,7 @@ public class DemoApplicationTest {
     @Test
     public void testAdd() {
         DemoApplication app = new DemoApplication();
-        int result = app.add(2, 2);
+        int result = app.add(4, 2);
         assertEquals(4, result);
     }
 }
