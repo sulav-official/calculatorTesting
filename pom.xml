@@ -7,6 +7,8 @@
     <groupId>org.example</groupId>
     <artifactId>test_driven_deployment</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>  <!-- Ensure this is set to 'war' -->
+
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
