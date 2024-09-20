@@ -81,7 +81,7 @@
 <body>
 
 <div class="calculator-container">
-    <h1>Simple Calculator</h1>
+    <h1>Simple Calculator V2</h1>
 
     <form action="calculate" method="get">
         <label for="num1">Number 1:</label>
