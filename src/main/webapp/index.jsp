@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <style>
-        /* Reset basic styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
@@ -20,81 +19,100 @@
             align-items: center;
             height: 100vh;
         }
-
-        .calculator-container {
+        .container {
             background-color: #fff;
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
             max-width: 400px;
             width: 100%;
         }
-
         h1 {
-            color: #2c3e50;
             margin-bottom: 20px;
+            color: #2c3e50;
         }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-            color: #34495e;
-            text-align: left;
-        }
-
-        input[type="number"] {
+        input {
+            margin: 15px 10px;
             padding: 10px;
-            margin-bottom: 20px;
-            width: 100%;
-            box-sizing: border-box;
+            width: 60px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-            color: #2c3e50;
+            border-radius: 5px;
         }
-
-        input[type="submit"] {
+        button {
+            margin: 10px 5px; /* Adjusted margin for spacing */
+            padding: 10px 20px;
             background-color: #3498db;
             color: white;
-            padding: 12px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1.2em;
-            transition: background-color 0.3s ease;
-            width: 100%;
+            transition: background-color 0.3s;
         }
-
-        input[type="submit"]:hover {
+        button:hover {
             background-color: #2980b9;
         }
-
-        .note {
+        .result {
             margin-top: 20px;
-            font-size: 0.9em;
-            color: #95a5a6;
+            font-size: 1.5em;
+            color: #e74c3c;
         }
     </style>
 </head>
 <body>
 
-<div class="calculator-container">
-    <h1>Simple Calculator V3</h1>
-
-    <form action="calculate" method="get">
-        <label for="num1">Number 1:</label>
-        <input type="number" id="num1" name="num1" required>
-
-        <label for="num2">Number 2:</label>
-        <input type="number" id="num2" name="num2" required>
-
-        <input type="submit" value="Calculate Sum">
-    </form>
-
-    <p class="note">Enter two numbers to calculate their sum.</p>
+<div class="container">
+    <h1>Calculator</h1>
+    <input type="number" id="num1" placeholder="First Number" required>
+    <input type="number" id="num2" placeholder="Second Number" required>
+    <input type="number" id="num3" placeholder="Third Number" required>
+    <br>
+    <button onclick="calculate('add')">Add</button>
+    <button onclick="calculate('subtract')">Subtract</button>
+    <button onclick="calculate('multiply')">Multiply</button>
+    <button onclick="calculate('divide')">Divide</button>
+    <button onclick="calculate('percentage')">Percentage</button>
+    <div class="result" id="result"></div>
 </div>
+
+<script>
+    function calculate(operation) {
+        const num1 = parseFloat(document.getElementById('num1').value);
+        const num2 = parseFloat(document.getElementById('num2').value);
+        const num3 = parseFloat(document.getElementById('num3').value);
+        let result;
+
+        switch (operation) {
+            case 'add':
+                result = num1 + num2 + num3;
+                break;
+            case 'subtract':
+                result = num1 - num2 - num3;
+                break;
+            case 'multiply':
+                result = num1 * num2 * num3;
+                break;
+            case 'divide':
+                if (num2 === 0 || num3 === 0) {
+                    result = 'Cannot divide by zero!';
+                } else {
+                    result = num1 / num2 / num3;
+                }
+                break;
+            case 'percentage':
+                if (num2 === 0) {
+                    result = 'Cannot calculate percentage with zero!';
+                } else {
+                    result = (num1 / num2) * 100; // Calculate percentage based on first and second numbers
+                }
+                break;
+            default:
+                result = 'Invalid operation';
+        }
+
+        document.getElementById('result').innerText = `Result: ${result}`;
+    }
+</script>
 
 </body>
 </html>
