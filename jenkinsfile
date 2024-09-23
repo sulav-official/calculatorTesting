@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone Repository') {
+            steps {
+                // Specify the branch explicitly (in this case, 'main')
+                git branch: 'main', url: 'https://github.com/sulav-official/calculatorTesting.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        stage('Deploy to Tomcat') {
+            steps {
+                deployToContainer(credentialsId: 'admin', url: 'http://localhost:8010', war: 'test1-1.war')
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Deployment Successful!'
+        }
+        failure {
+            echo 'Deployment Failed!'
+        }
+    }
+}
+
+
+
+
+                withCredentials([usernamePassword(credentialsId: 'admin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    deployToContainer(credentialsId: 'admin', url: 'http://localhost:8010', war: 'target/test1-1.war')
