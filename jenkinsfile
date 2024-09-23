@@ -1,10 +1,46 @@
+// pipeline {
+//     agent any
+//     stages {
+//         stage('Clone Repository') {
+//             steps {
+//                 git branch: 'main', url: 'https://github.com/sulav-official/calculatorTesting.git'
+//             }
+//         }
+//         stage('Build') {
+//             steps {
+//                 sh 'mvn clean install'
+//             }
+//         }
+//         stage('Deploy to Tomcat') {
+//             steps {
+//                 withCredentials([usernamePassword(credentialsId: 'c5a1e0fc-db63-4ccd-903b-b985501e1da0',
+//                  passwordVariable: 'TOMCAT_PASSWORD', usernameVariable: 'TOMCAT_USER')]) {
+//                     sh '''
+//                         echo "Deploying to Tomcat as user ${TOMCAT_USER}"
+//                         # Deploying to Tomcat running on localhost:8010
+//                         curl --user ${TOMCAT_USER}:${TOMCAT_PASSWORD} -X POST http://localhost:8010/deploy
+//                     '''
+//                 }
+//             }
+//         }
+//     }
+//     post {
+//         success {
+//             echo 'Deployment Successful!'
+//         }
+//         failure {
+//             echo 'Deployment Failed!'
+//         }
+//     }
+// }
 pipeline {
     agent any
+
     stages {
         stage('Clone Repository') {
             steps {
-                // Specify the branch explicitly (in this case, 'main')
-                git branch: 'main', url: 'https://github.com/sulav-official/calculatorTesting.git'
+                git url: 'https://github.com/sulav-official/calculatorTesting.git',
+                branch: 'main'
             }
         }
         stage('Build') {
@@ -12,24 +48,22 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('Deploy to Tomcat') {
+        stage('Test') {
             steps {
-                deployToContainer(credentialsId: 'admin', url: 'http://localhost:8010', war: 'test1-1.war')
-            }
-        }
-    }
+                script {
+                    def mvnOutput = sh(script: 'mvn test', returnStatus: true)
+                    if (mvnOutput != 0) {
+                        error("Tests failed. Stopping the build.")         } }}}
+
+        stage('Deploy to Tomcat') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS'}    }
+
+            steps {
+                withCredentials([usernameColonPassword(credentialsId: 'TOMCAT_CREDENTIALS', variable: 'TOMCAT_PASSWORD')]) {
+                   sh 'curl --user $TOMCAT_PASSWORD -X POST http://localhost:8010/deploy'
+                }}}}
     post {
-        success {
-            echo 'Deployment Successful!'
-        }
-        failure {
-            echo 'Deployment Failed!'
-        }
-    }
-}
+        always {
+            echo "Build complete!"}}}
 
-
-
-
-                withCredentials([usernamePassword(credentialsId: 'admin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    deployToContainer(credentialsId: 'admin', url: 'http://localhost:8010', war: 'target/test1-1.war')
